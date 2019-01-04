@@ -6,7 +6,8 @@ class ProductsController < ApplicationController
   def index
     @products = @category.products
 
-    render json: ProductSerializer.new(@products)
+    # render json: ProductSerializer.new(@products)
+    render json: @products
   end
 
   # GET /products/1
@@ -44,7 +45,7 @@ class ProductsController < ApplicationController
     def set_product
       @product = Product.find(params[:id])
     end
-    
+
     def set_category
       @category = Category.find(params[:category_id])
     end

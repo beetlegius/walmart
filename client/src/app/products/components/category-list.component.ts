@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../category.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Category } from '../category';
 
 @Component({
@@ -7,16 +6,16 @@ import { Category } from '../category';
   templateUrl: './category-list.component.html'
 })
 export class CategoryListComponent implements OnInit {
-  categories: Category[];
+  @Input() categories: Category[];
+  @Output() selected = new EventEmitter<Category>();
   
-  constructor(
-    private categoryService: CategoryService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.categoryService.all().subscribe(
-      categories => this.categories = categories
-    )
+  }
+
+  select(category: Category) {
+    this.selected.emit(category);
   }
 
 }

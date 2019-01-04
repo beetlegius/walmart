@@ -13,7 +13,7 @@ export class ProductService {
     private http: HttpClient
   ) { }
 
-  all(category_id: number): Observable<Product[]> {
+  all(category_id: number | null): Observable<Product[]> {
     return this.http.get<Product[]>(`/api/categories/${category_id}/products`);
   }
 
