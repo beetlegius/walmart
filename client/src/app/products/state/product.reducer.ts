@@ -1,5 +1,5 @@
 import { ProductActionTypes, ProductActions } from './product.actions';
-import { Product } from '../product';
+import { Product } from '../../models';
 
 export interface ProductState {
   products: Product[];

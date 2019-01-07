@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-25.times { Category.create name: Faker::Commerce.department }
+2500.times { Category.create name: Faker::Commerce.department }
 
 Category.all.each do |category|
-  rand(20).times do
+  rand(200).times do
     category.products.create!(
       name:        Faker::Commerce.product_name,
       description: Faker::Lorem.paragraph,

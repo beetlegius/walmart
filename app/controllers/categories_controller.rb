@@ -1,25 +1,25 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :update, :destroy]
+  before_action :set_category, :protect, only: [:show, :update, :destroy]
 
   # GET /categories
   def index
     @categories = Category.includes(:products)
-
-    # render json: CategorySerializer.new(@categories).serializable_hash
-    render json: @categories
+    authorize @categories
+    serialize @categories
   end
 
   # GET /categories/1
   def show
-    render json: @category
+    serialize @category
   end
 
   # POST /categories
   def create
     @category = Category.new(category_params)
+    authorize @category
 
     if @category.save
-      render json: @category, status: :created, location: @category
+      serialize @category, status: :created, location: @category
     else
       render json: @category.errors, status: :unprocessable_entity
     end
@@ -44,9 +44,21 @@ class CategoriesController < ApplicationController
     def set_category
       @category = Category.find(params[:id])
     end
+    
+    def protect
+      authorize @category
+    end
 
     # Only allow a trusted parameter "white list" through.
     def category_params
       params.require(:category).permit(:name, :products_count)
+    end
+    
+    def serialize(records, options = {})
+      results = options.merge(
+        json: CategorySerializer.new(records).serializable_hash
+      )
+      
+      render results
     end
 end

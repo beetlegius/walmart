@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
-
-import { Product } from '../product';
+import { Product } from '../../models';
 
 export enum ProductActionTypes {
   Load        = '[Product] Load',
@@ -10,6 +9,8 @@ export enum ProductActionTypes {
 
 export class Load implements Action {
   readonly type = ProductActionTypes.Load;
+
+  constructor(public payload: number) {}
 }
 
 export class LoadSuccess implements Action {

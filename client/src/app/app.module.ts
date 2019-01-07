@@ -7,14 +7,28 @@ import { AppComponent } from './app.component';
 import { ShellComponent } from './home/shell.component';
 import { MenuComponent } from './home/menu.component';
 import { WelcomeComponent } from './home/welcome.component';
+import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   imports: [
     BrowserModule,
+    HttpClientModule,
     SharedModule,
+    AuthModule,
     AppRoutingModule,
-    HttpClientModule
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'Walmart',
+      maxAge: 25,
+      logOnly: environment.production
+    }),
+    EffectsModule.forRoot([])
   ],
   declarations: [
     AppComponent,
@@ -22,7 +36,6 @@ import { SharedModule } from './shared/shared.module';
     MenuComponent,
     WelcomeComponent
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

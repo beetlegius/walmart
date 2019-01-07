@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let category of categories">
+    <a (click)="select(category)">{{category.attributes.name}}</a>
+  </li>
+</ul>
