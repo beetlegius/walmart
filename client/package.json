@@ -23,6 +23,7 @@
     "@ngrx/effects": "^7.0.0",
     "@ngrx/store": "^7.0.0",
     "@ngrx/store-devtools": "^7.0.0",
+    "angular2-actioncable": "^6.0.0",
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "ngx-jsonapi": "^2.0.0",

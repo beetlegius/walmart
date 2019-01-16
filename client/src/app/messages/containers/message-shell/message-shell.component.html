@@ -1,0 +1,15 @@
+<div class="container">
+  <h3>Messages</h3>
+
+  <app-message-list
+    [messages]="messages"
+  ></app-message-list>
+
+  <app-message-form
+    [form]="messageForm"
+    [submitted]="submitted"
+    (submitForm)="create($event)"
+    *ngIf="connected"
+  ></app-message-form>
+
+</div>

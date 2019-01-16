@@ -15,6 +15,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 
+import { ActionCableService } from 'angular2-actioncable';
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -35,6 +38,9 @@ import { environment } from 'src/environments/environment';
     ShellComponent,
     MenuComponent,
     WelcomeComponent
+  ],
+  providers: [
+    ActionCableService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,18 +1,13 @@
 # == Schema Information
 #
-# Table name: products
+# Table name: users
 #
-#  id          :integer          not null, primary key
-#  description :string
-#  name        :string
-#  price       :decimal(15, 2)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  category_id :integer
-#
-# Indexes
-#
-#  index_products_on_category_id  (category_id)
+#  id              :integer          not null, primary key
+#  email           :string
+#  password_digest :string
+#  role            :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 
 class UserSerializer

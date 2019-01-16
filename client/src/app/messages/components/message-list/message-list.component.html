@@ -1,0 +1,5 @@
+<ul *ngIf="messages">
+  <li *ngFor="let message of messages">
+    <strong>{{message.author}}</strong>: {{message.text}}
+  </li>
+</ul>

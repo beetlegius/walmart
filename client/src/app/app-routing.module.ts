@@ -15,6 +15,10 @@ const routes: Routes = [
         path: 'products',
         loadChildren: './products/product.module#ProductModule'
       },
+      {
+        path: 'messages',
+        loadChildren: './messages/message.module#MessageModule'
+      },
       { path: '', redirectTo: '/welcome', pathMatch: 'full' }
     ]
   }

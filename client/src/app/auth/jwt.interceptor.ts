@@ -17,7 +17,6 @@ export class JWTInterceptor implements HttpInterceptor {
     return this.store.pipe(
       select(fromAuth.getToken),
       mergeMap(token => {
-        console.log(token);
         request = request.clone({
           setHeaders: {
             Authorization: `Bearer ${token}`
