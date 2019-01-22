@@ -2,12 +2,12 @@
   <h3>Messages</h3>
 
   <app-message-list
-    [messages]="messages"
+    [messages]="messages$ | async"
   ></app-message-list>
 
   <app-message-form
     [form]="messageForm"
-    [submitted]="submitted"
+    [submitted]="submitted$ | async"
     (submitForm)="create($event)"
     *ngIf="connected"
   ></app-message-form>

@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { Message } from '../../../models';
 
 @Component({
   selector: 'app-message-form',

@@ -1,10 +1,12 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionCableService, Channel } from 'angular2-actioncable';
-import { MessageService } from '../../message.service';
-import { Message } from '../../message';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { Subscription, Observable } from 'rxjs';
+
+import * as state               from '../../state/message.state';
+import * as actions             from '../../state/message.actions';
+import { Message }              from '../../../models/message';
 import { MessageFormComponent } from '../../components/message-form/message-form.component';
 
 @Component({
@@ -12,22 +14,26 @@ import { MessageFormComponent } from '../../components/message-form/message-form
 })
 export class MessageShellComponent implements OnInit {
   @ViewChild(MessageFormComponent) messageFormComponent: MessageFormComponent;
-  channel: Channel;
-  connected: boolean;
+  channel:      Channel;
+  connected:    boolean;
   subscription: Subscription;
   
-  messages: Message[] = [];
-  submitted: boolean = false;
-  messageForm: FormGroup;
+  messages$:     Observable<Message[]>;
+  errorMessage$: Observable<string>;
+  submitted$:    Observable<boolean>;
+  messageForm:   FormGroup;
  
   constructor(
     private cableService: ActionCableService,
-    private messageService: MessageService,
+    private store: Store<state.State>,
     private fb: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.messageService.all().subscribe(messages => this.messages = messages);
+    this.store.dispatch(new actions.Load());
+    this.messages$     = this.store.pipe(select(state.getMessages));
+    this.errorMessage$ = this.store.pipe(select(state.getMessagesError));
+    this.submitted$    = this.store.pipe(select(state.getSubmitted));
 
     // Open a connection and obtain a reference to the channel
     this.channel = this.cableService
@@ -36,7 +42,7 @@ export class MessageShellComponent implements OnInit {
  
     // Subscribe to incoming messages
     this.subscription = this.channel.received().subscribe(
-      (message: Message) => this.messages.push(message)
+      (message: Message) => this.store.dispatch(new actions.ShowMessage(message))
     );
 
     this.channel.connected().subscribe(
@@ -62,19 +68,19 @@ export class MessageShellComponent implements OnInit {
   }
 
   create(message) {
-    this.submitted = true;
+    this.store.dispatch(new actions.Submit());
     
     if (this.messageForm.invalid) {
       return;
     }
 
-    this.messageService.create(message).subscribe(
-      () => {
-        this.submitted = false;
-        this.messageForm.reset();
-        this.messageFormComponent.authorInput.nativeElement.focus();
-      }
-    );
+    this.store.dispatch(new actions.Create(message));
+    // this.messageService.create(message).subscribe(
+    //   () => {
+    //     this.messageForm.reset();
+    //     this.messageFormComponent.authorInput.nativeElement.focus();
+    //   }
+    // );
   }
 
 }

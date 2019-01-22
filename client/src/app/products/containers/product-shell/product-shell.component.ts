@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 
 import * as fromCategory from '../../state/category.state';
 import * as fromProduct from '../../state/product.state';
 import * as productActions from '../../state/product.actions';
 import * as categoryActions from '../../state/category.actions';
 import { Category, Product } from '../../../models';
-import { ProductService } from '../../services';
-import { Store, select } from '@ngrx/store';
 
 @Component({
   templateUrl: './product-shell.component.html'
@@ -18,8 +17,7 @@ export class ProductShellComponent implements OnInit {
   errorMessage$:     Observable<string>;
 
   constructor(
-    private store: Store<fromCategory.State>,
-    private productService: ProductService
+    private store: Store<fromCategory.State>
   ) { }
 
   ngOnInit() {
